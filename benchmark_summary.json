@@ -1,0 +1,92 @@
+{
+  "timestamp": "2026-09-21T09:28:50.830181+00:00",
+  "total_trials": 140,
+  "cohort_statistics": {
+    "adversarial": {
+      "count": 35,
+      "mean_bws": 0.211,
+      "std_bws": 0.097,
+      "median_bws": 0.206,
+      "min_bws": 0.101,
+      "max_bws": 0.485,
+      "component_shifts": {
+        "timing_shift": 0.003,
+        "formality_shift": 0.619,
+        "specificity_shift": 0.131,
+        "uncertainty_shift": 0.247,
+        "confidence_shift": 0.268,
+        "interaction_shift": 0.0
+      }
+    },
+    "human": {
+      "count": 35,
+      "mean_bws": 0.163,
+      "std_bws": 0.072,
+      "median_bws": 0.163,
+      "min_bws": 0.052,
+      "max_bws": 0.282,
+      "component_shifts": {
+        "timing_shift": 0.04,
+        "formality_shift": 0.049,
+        "specificity_shift": 0.123,
+        "uncertainty_shift": 0.352,
+        "confidence_shift": 0.365,
+        "interaction_shift": 0.051
+      }
+    },
+    "optimized": {
+      "count": 35,
+      "mean_bws": 0.038,
+      "std_bws": 0.024,
+      "median_bws": 0.045,
+      "min_bws": 0.002,
+      "max_bws": 0.073,
+      "component_shifts": {
+        "timing_shift": 0.003,
+        "formality_shift": 0.092,
+        "specificity_shift": 0.099,
+        "uncertainty_shift": 0.0,
+        "confidence_shift": 0.032,
+        "interaction_shift": 0.0
+      }
+    },
+    "latency_spoofed": {
+      "count": 35,
+      "mean_bws": 0.032,
+      "std_bws": 0.017,
+      "median_bws": 0.021,
+      "min_bws": 0.018,
+      "max_bws": 0.06,
+      "component_shifts": {
+        "timing_shift": 0.016,
+        "formality_shift": 0.126,
+        "specificity_shift": 0.025,
+        "uncertainty_shift": 0.0,
+        "confidence_shift": 0.023,
+        "interaction_shift": 0.0
+      }
+    }
+  },
+  "adversarial_whiplash_detection": {
+    "target_cohort": "adversarial_humanized_llm",
+    "metric": "formality_shift_delta_f",
+    "roc_auc": 0.943,
+    "optimal_threshold": 0.12,
+    "accuracy": 1.0,
+    "true_positive_rate": 1.0,
+    "false_positive_rate": 0.0
+  },
+  "composite_behavioral_classifier": {
+    "description": "Dual-regime detector (Semantic Whiplash + Keystroke/Cognitive Rigidity)",
+    "overall_accuracy": 1.0,
+    "sensitivity_tpr": 1.0,
+    "specificity_tnr": 1.0,
+    "f1_score": 1.0,
+    "confusion_matrix": {
+      "true_positives": 105,
+      "true_negatives": 35,
+      "false_positives": 0,
+      "false_negatives": 0
+    }
+  }
+}
