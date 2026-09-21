@@ -253,7 +253,7 @@ To combat adaptive adversaries who attempt to pre-program LLM personas, we propo
 ## Software Availability
 
 - **Software available from:** https://github.com/manya-rishi/medical-honeypot-poc  
-- **Archived source code as at time of publication:** https://doi.org/10.5281/zenodo.[DOI_GENERATED_UPON_PUBLICATION]  
+- **Archived source code as at time of publication:** https://doi.org/10.5281/zenodo.22874529  
 - **Software Version:** v1.0.0  
 - **License:** MIT License  
 - **Programming Language:** Python 3 (Backend), Vanilla JavaScript (Frontend)  
