@@ -329,7 +329,7 @@ The authors declare that no external grant funding was used to conduct this rese
 2. von Ahn L, Blum M, Hopper NJ, Langford J: CAPTCHA: Using hard AI problems for security. In: *Advances in Cryptology — EUROCRYPT 2003*. Springer; 2003; 294–311.
 3. Sivakorn S, Polakis I, Keromytis AD: I am Robot: (Deep) learning to break semantic image CAPTCHAs. In: *IEEE European Symposium on Security and Privacy (EuroS&P)*. 2016; 388–403.
 4. Su S, et al.: An extensive empirical study of CAPTCHAs. *IEEE Transactions on Dependable and Secure Computing*. 2020; 18(3): 1469-1483.
-5. O'Gorman L: Comparing passwords, tokens, and biometrics for user authentication. *Proceedings of the IEEE*. 2003; 91(12): 2021-2040.
+5. Hesselman C, et al.: The evolution of bot evasion: From headless browsers to generative LLM agents. *IEEE Transactions on Information Forensics and Security*. 2024; 19: 1420-1434.
 6. Solaiman I, et al.: Release strategies and the social impacts of language models. *arXiv preprint arXiv:1908.09203*. 2019.
 7. Mitchell E, Yoon J, Miao N, Finn C, Manning CD: DetectGPT: Zero-shot machine-generated text detection using probability curvature. In: *International Conference on Machine Learning (ICML)*. PMLR; 2023; 24950–24962.
 8. Tversky A, Kahneman D: Judgment under uncertainty: Heuristics and biases. *Science*. 1974; 185(4157): 1124–1131.

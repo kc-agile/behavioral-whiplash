@@ -68,7 +68,7 @@ behavioral-whiplash/
 │   └── DATA_DICTIONARY.md    # FAIR-compliant dataset codebook & database schema
 │
 └── docs/
-    ├── methodology.md        # Detailed breakdown of Whplash methodology
+    ├── methodology.md        # Detailed breakdown of Whiplash methodology
     ├── threat-model.md       # AI evasion capabilities and Threat Modeling
     └── reproducibility.md    # Instructions on how to reproduce the baseline data
 ```

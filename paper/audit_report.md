@@ -80,9 +80,11 @@ PASS WITH REVIEW NOTES
 | WARNING | manuscript.md | evasion | WARNING / TERMINOLOGY RISK | Context: "Yet, the rapid emergence of generative LLMs has introduced a new paradigm of evasion [5]" |
 | WARNING | manuscript.md | evasion | WARNING / TERMINOLOGY RISK | Context: "- When prompted in Turn 2 to act like an ordinary uncertain person (Adversarial Evasion), the LLM undergoes an unnatural register drop to slang and colloquialisms, producing a high formality shift $\Delta f \gg 0" |
 | INFO | manuscript.md | evasion | SAFE / EXPERIMENTAL SCENARIO | Context: "**Adversarial Evasion AI Cohort:** LLM agents instructed to evade detection by pivoting from an analytical Turn 1 response to an informal, casual "human" persona in Turn 2" |
+| WARNING | manuscript.md | evasion | WARNING / TERMINOLOGY RISK | Context: ": The evolution of bot evasion: From headless browsers to generative LLM agents" |
 | WARNING | manuscript.md | security | WARNING / TERMINOLOGY RISK | Context: "**Keywords:** Behavioral Honeypot; CAPTCHA; Large Language Models; Bot Detection; Keystroke Dynamics; Behavioral Whiplash; Behavioral Continuity; Cyber-Physical Security" |
 | WARNING | manuscript.md | security | WARNING / TERMINOLOGY RISK | Context: "von Ahn L, Blum M, Hopper NJ, Langford J: CAPTCHA: Using hard AI problems for security" |
 | WARNING | manuscript.md | security | WARNING / TERMINOLOGY RISK | Context: "In: *IEEE European Symposium on Security and Privacy (EuroS&P)*" |
+| WARNING | manuscript.md | security | WARNING / TERMINOLOGY RISK | Context: "*IEEE Transactions on Information Forensics and Security*" |
 | INFO | manuscript.md | cognitive | SAFE / TECHNICAL DESCRIPTION | Context: "- $T_{\text{first}}$: Latency to first character entry (ms), measuring initial cognitive processing delay" |
 | WARNING | manuscript.md | cognitive | WARNING / TERMINOLOGY RISK | Context: "**Epistemic Uncertainty ($u_k$):** Quantifies cognitive doubt and hedging markers (e" |
 | INFO | manuscript.md | cognitive | SAFE / TECHNICAL DESCRIPTION | Context: "**Synthetic Human Baseline Cohort:** Empirically calibrated human typing speeds ($220-320$ CPM), organic cognitive hesitation ($1100-2600$ ms before first character), authentic revision loops ($2-7$ backspaces), and colloquial phrasing with natural uncertainty" |
