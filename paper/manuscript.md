@@ -1,4 +1,4 @@
-# Behavioral Whiplash: An Open-Source Behavioral Honeypot and Keystroke Telemetry Suite for Exposing LLM Agent Discontinuities in Multi-Turn Verification (v1.1.0)
+# Behavioral Whiplash: An Open-Source Behavioral Honeypot and Keystroke Telemetry Suite for Exposing LLM Agent Discontinuities in Multi-Turn Verification (v1.1.1)
 
 **Article Type:** Software Tool Article  
 **Target Journal:** F1000Research  
@@ -275,8 +275,8 @@ The v1.1 benchmark evaluates two synthetic active-defense scenarios, while seman
 ## Software Availability
 
 - **Software available from:** https://github.com/kc-agile/behavioral-whiplash  
-- **Archived source code as at time of publication:** https://doi.org/10.5281/zenodo.22876461  
-- **Software Version:** v1.1.0  
+- **Archived source code as at time of publication:** https://doi.org/10.5281/zenodo.22879793  
+- **Software Version:** v1.1.1  
 - **License:** MIT License  
 - **Programming Language:** Python 3 (Backend), Vanilla JavaScript (Frontend)  
 - **Platform Independence:** Tested on Windows 11, Ubuntu Linux 22.04 LTS, and macOS Sonoma.

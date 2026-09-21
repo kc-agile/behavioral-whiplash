@@ -261,8 +261,8 @@ def main():
     # 4. CROSS-FILE CONSISTENCY
     # ==================================================
     cross_checks = [
-        ('Version', 'v1.1.0'),
-        ('DOI', '10.5281/zenodo.22876461'),
+        ('Version', 'v1.1.1'),
+        ('DOI', '10.5281/zenodo.22879793'),
         ('N=210', '210'),
         ('Six cohorts', 'six synthetic benchmark cohorts'),
         ('35 trials', '35 synthetic benchmark trials'),
@@ -439,7 +439,7 @@ def main():
         ('Server execution', 'python src/server.py'),
         ('v1.1 benchmark command', 'python benchmark/run_extended_benchmark.py'),
         ('v1.0 benchmark command', 'python benchmark/run_benchmark.py'),
-        ('DOI', '10.5281/zenodo.22876461')
+        ('DOI', '10.5281/zenodo.22879793')
     ]
     
     for name, term in repos:
@@ -456,7 +456,7 @@ def main():
     elif warnings > 0: overall = 'PASS WITH REVIEW NOTES'
     
     report = []
-    report.append("# Behavioral Whiplash v1.1.0 Publication Audit\n\n")
+    report.append("# Behavioral Whiplash v1.1.1 Publication Audit\n\n")
     report.append("## Executive Summary\n\n")
     report.append(f"Overall:\n{overall}\n\n")
     
@@ -510,7 +510,7 @@ def main():
         f.write("".join(report))
         
     print("==================================================")
-    print("Behavioral Whiplash v1.1.0 Publication Audit")
+    print("Behavioral Whiplash v1.1.1 Publication Audit")
     print("==================================================")
     
     c_impl = len(findings['impl']); f_impl = sum(1 for x in findings['impl'] if x['status']=='FAIL'); w_impl = sum(1 for x in findings['impl'] if x['status'] not in ['PASS','FAIL'])

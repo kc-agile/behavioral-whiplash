@@ -1,4 +1,4 @@
-# Behavioral Whiplash v1.1.0 Publication Audit
+# Behavioral Whiplash v1.1.1 Publication Audit
 
 ## Executive Summary
 
