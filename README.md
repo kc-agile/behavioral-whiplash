@@ -77,7 +77,7 @@ behavioral-whiplash/
 
 ## Core Concept: Behavioral Whiplash Score (BWS)
 
-Instead of relying on single-shot trivia or easily spoofed visual puzzles, Behavioral Whiplash evaluates **transition divergence** across a two-turn ambiguous behavioral honeypot.
+Instead of relying on single-shot trivia or easily spoofed visual puzzles, Behavioral Whiplash evaluates **transition divergence** across a two-turn context-pivoting behavioral honeypot.
 
 For each submission, the engine extracts a 6-dimensional normalized vector:
 $$\mathbf{b} = (\tau, f, s, u, c, \kappa)$$
@@ -94,7 +94,7 @@ $$\text{BWS} = \frac{1}{6} \sum_{i=1}^{6} |\mathbf{b}_1 - \mathbf{b}_2|$$
 ### Key Empirical Findings
 1. **Semantic Whiplash:** Adversarial LLMs attempting to sound like casual humans in Turn 2 produce an abrupt register collapse ($\Delta f = 0.619$ vs. human $0.049$), yielding an **ROC-AUC of 0.943**.
 2. **Interactional Rigidity:** Non-steered bots exhibit zero epistemic modulation ($\Delta u = 0.0$) and zero interactive keystroke revisions ($\Delta \kappa = 0.0$).
-3. **Composite Detector:** A dual-regime rule combining Semantic Whiplash and Interactional Rigidity achieved **100% classification accuracy** on the $N=140$ synthetic benchmark cohorts. This result should not be interpreted as an estimate of real-world human/bot detection accuracy; the benchmark cohorts are simulated.
+3. **Composite Detector:** The dual-regime proof-of-concept detector achieved 100% classification accuracy (F1 = 1.0) on the $N=140$ synthetic benchmark cohorts. This result should not be interpreted as an estimate of real-world human/bot detection accuracy.
 
 ---
 
