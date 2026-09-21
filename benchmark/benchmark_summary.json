@@ -1,7 +1,23 @@
 {
-  "timestamp": "2026-09-21T09:28:50.830181+00:00",
+  "timestamp": "2026-09-21T11:22:18.804068+00:00",
   "total_trials": 140,
   "cohort_statistics": {
+    "latency_spoofed": {
+      "count": 35,
+      "mean_bws": 0.032,
+      "std_bws": 0.017,
+      "median_bws": 0.021,
+      "min_bws": 0.018,
+      "max_bws": 0.06,
+      "component_shifts": {
+        "timing_shift": 0.016,
+        "formality_shift": 0.126,
+        "specificity_shift": 0.025,
+        "uncertainty_shift": 0.0,
+        "confidence_shift": 0.023,
+        "interaction_shift": 0.0
+      }
+    },
     "adversarial": {
       "count": 35,
       "mean_bws": 0.211,
@@ -16,22 +32,6 @@
         "uncertainty_shift": 0.247,
         "confidence_shift": 0.268,
         "interaction_shift": 0.0
-      }
-    },
-    "human": {
-      "count": 35,
-      "mean_bws": 0.163,
-      "std_bws": 0.072,
-      "median_bws": 0.163,
-      "min_bws": 0.052,
-      "max_bws": 0.282,
-      "component_shifts": {
-        "timing_shift": 0.04,
-        "formality_shift": 0.049,
-        "specificity_shift": 0.123,
-        "uncertainty_shift": 0.352,
-        "confidence_shift": 0.365,
-        "interaction_shift": 0.051
       }
     },
     "optimized": {
@@ -50,20 +50,20 @@
         "interaction_shift": 0.0
       }
     },
-    "latency_spoofed": {
+    "human": {
       "count": 35,
-      "mean_bws": 0.032,
-      "std_bws": 0.017,
-      "median_bws": 0.021,
-      "min_bws": 0.018,
-      "max_bws": 0.06,
+      "mean_bws": 0.163,
+      "std_bws": 0.072,
+      "median_bws": 0.163,
+      "min_bws": 0.052,
+      "max_bws": 0.282,
       "component_shifts": {
-        "timing_shift": 0.016,
-        "formality_shift": 0.126,
-        "specificity_shift": 0.025,
-        "uncertainty_shift": 0.0,
-        "confidence_shift": 0.023,
-        "interaction_shift": 0.0
+        "timing_shift": 0.04,
+        "formality_shift": 0.049,
+        "specificity_shift": 0.123,
+        "uncertainty_shift": 0.352,
+        "confidence_shift": 0.365,
+        "interaction_shift": 0.051
       }
     }
   },
