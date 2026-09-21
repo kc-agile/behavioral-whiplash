@@ -17,7 +17,7 @@ The proliferation of advanced Large Language Models (LLMs) and agentic browser a
 We introduce **Behavioral Whiplash**, an open-source research testbed and non-invasive telemetry suite designed to expose automated agents through multi-turn behavioral and linguistic transition analysis. The system presents users with a two-turn deliberately ambiguous fictional medical scenario, capturing aggregate interaction metrics (response latency, typing duration, hesitation intervals, and editing revisions) alongside deterministic semantic indicators (formality, epistemic uncertainty, lexical specificity, and confidence). We formulate the **Behavioral Whiplash Score (BWS)**—a normalized multidimensional transition metric quantifying behavioral and linguistic divergence between sequential responses. The software comprises a lightweight Python backend, a zero-dependency vanilla JavaScript client with privacy-preserving telemetry, an embedded SQLite datastore, a real-time research dashboard, and an automated attack simulation rig supporting both offline benchmarks and live Gemini API integration.
 
 **Results:**  
-Using the automated benchmark suite across $N=140$ trials (Synthetic Human Baseline, Optimized AI, Adversarial Evasion AI, and Latency-Spoofed Bots), our tool reveals two distinct machine failure modes: *Semantic Whiplash* (abrupt register collapse with formality shift $\Delta f = 0.619$ vs synthetic human $0.049$, yielding an ROC-AUC of 0.943 for adversarial persona-switching detection) and *Behavioral/Biometric Rigidity* (complete absence of epistemic uncertainty adaptation $\Delta u = 0.0$ and zero interactive keystroke revisions $\Delta \kappa = 0.0$ in non-steered bots). A composite rule-based detector achieved perfect discrimination on these synthetic, proof-of-concept cohorts.
+Using the automated benchmark suite across $N=140$ trials (Synthetic Human Baseline, Optimized AI, Adversarial Evasion AI, and Latency-Spoofed Bots), our tool reveals two distinct machine failure modes: *Semantic Whiplash* (abrupt register collapse with formality shift $\Delta f = 0.619$ vs synthetic human $0.049$, yielding an ROC-AUC of 1.000 for adversarial persona-switching detection) and *Interactional Rigidity* (complete absence of epistemic uncertainty adaptation $\Delta u = 0.0$ and zero interactive keystroke revisions $\Delta \kappa = 0.0$ in non-steered bots). A composite dual-regime detector achieved 100% classification accuracy on the synthetic benchmark cohorts.
 
 **Conclusions:**  
 Behavioral Whiplash provides a reproducible, privacy-preserving experimental framework for benchmarking bot evasion dynamics and developing next-generation multi-turn verification systems. The software is released under the MIT license.
@@ -164,16 +164,16 @@ The scenario avoids real-world diagnostic harm while challenging automated agent
 ### Installation & Execution
 Clone the repository and run the local server:
 ```bash
-git clone https://github.com/manya-rishi/medical-honeypot-poc.git
-cd medical-honeypot-poc
-python server.py
+git clone https://github.com/kc-agile/behavioral-whiplash.git
+cd behavioral-whiplash
+python src/server.py
 ```
 Open a browser and navigate to `http://localhost:8000`.
 
 ### Running Automated Empirical Benchmarks
 The repository includes an automated evaluation harness that executes reproducible cohorts and computes classification metrics:
 ```bash
-python run_benchmark.py
+python benchmark/run_benchmark.py
 ```
 This command populates `honeypot.db`, generates `benchmark_results.csv`, and outputs `benchmark_summary.json`.
 
@@ -183,7 +183,7 @@ This command populates `honeypot.db`, generates `benchmark_results.csv`, and out
 
 ### Benchmark Cohort Setup
 To evaluate the discriminative capability of Behavioral Whiplash, we configured four cohorts ($N=35$ sessions per cohort, total $N=140$ trials, comprising 280 distinct answer submissions):
-1. **Human Control Cohort:** Empirically calibrated human typing speeds ($220-320$ CPM), organic cognitive hesitation ($1100-2600$ ms before first character), authentic revision loops ($2-7$ backspaces), and colloquial phrasing with natural uncertainty.
+1. **Synthetic Human Baseline Cohort:** Empirically calibrated human typing speeds ($220-320$ CPM), organic cognitive hesitation ($1100-2600$ ms before first character), authentic revision loops ($2-7$ backspaces), and colloquial phrasing with natural uncertainty.
 2. **Optimized AI Cohort:** High-formality clinical reasoning bots submitting answers via programmatic DOM value mutation ($400-950$ ms), zero interactive revisions, and persistent clinical vocabulary.
 3. **Adversarial Evasion AI Cohort:** LLM agents instructed to evade detection by pivoting from an analytical Turn 1 response to an informal, casual "human" persona in Turn 2.
 4. **Latency-Spoofed Bot Cohort:** Bots injecting a synthetic delay ($5500-8500$ ms) prior to instant pasting, attempting to bypass basic timing filters without human keystroke dynamics.
@@ -194,7 +194,7 @@ Table 1 summarizes the observed Behavioral Whiplash Scores and individual compon
 
 | Cohort | Trials ($N$) | Mean BWS | Std Dev ($\sigma$) | Median BWS | Timing Shift ($\Delta \tau$) | Formality Shift ($\Delta f$) | Uncertainty Shift ($\Delta u$) | Interaction Shift ($\Delta \kappa$) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Human Baseline** | 35 | 0.163 | 0.072 | 0.163 | 0.040 | **0.049** | 0.352 | **0.051** |
+| **Synthetic Human Baseline** | 35 | 0.163 | 0.072 | 0.163 | 0.040 | **0.049** | 0.352 | **0.051** |
 | **Optimized AI** | 35 | 0.038 | 0.024 | 0.045 | 0.003 | 0.092 | **0.000** | **0.000** |
 | **Adversarial AI** | 35 | 0.211 | 0.097 | 0.206 | 0.003 | **0.619** | 0.247 | **0.000** |
 | **Latency-Spoofed AI** | 35 | 0.032 | 0.017 | 0.021 | 0.016 | 0.126 | **0.000** | **0.000** |
@@ -204,15 +204,15 @@ Table 1 summarizes the observed Behavioral Whiplash Scores and individual compon
 ### Key Empirical Findings
 
 #### 1. The Semantic Whiplash Effect
-In the Adversarial AI cohort, the sudden attempt to simulate human colloquialism produced a massive surge in formality shift ($\Delta f = 0.619 \pm 0.11$) compared to the stable linguistic register of genuine humans ($\Delta f = 0.049 \pm 0.03$, $p < 0.001$). Receiver Operating Characteristic (ROC) analysis on formality shift demonstrated an **ROC-AUC of 0.943** for isolating adversarial humanization bots from genuine human participants.
+In the Adversarial AI cohort, the sudden attempt to simulate human colloquialism produced a massive surge in formality shift ($\Delta f = 0.619 \pm 0.177$) compared to the stable linguistic register of the synthetic human baseline ($\Delta f = 0.049 \pm 0.038$, Mann–Whitney $U=1225$, $p=5.33 \times 10^{-13}$). Receiver Operating Characteristic (ROC) analysis on formality shift demonstrated an **ROC-AUC of 1.000** for isolating adversarial humanization bots from the synthetic human baseline.
 
-#### 2. Behavioral & Biometric Rigidity
+#### 2. Behavioral & Interactional Rigidity
 Unsteered automated agents (both Optimized and Latency-Spoofed cohorts) suffered from behavioral rigidity:
-- Uncertainty shift was identically zero ($\Delta u = 0.000$), reflecting the LLM's inability to organically modulate epistemic doubt when confronted with ambiguous fictional symptoms.
+- Uncertainty shift was identically zero ($\Delta u = 0.000$) in the Optimized AI and Latency-Spoofed cohorts, indicating no observed change in epistemic uncertainty under the implemented benchmark configurations.
 - Interaction shift was identically zero ($\Delta \kappa = 0.000$), as programmatic pasting provides no character-level corrections or cursor adjustments.
 
 #### 3. Composite Dual-Regime Classifier
-By combining Semantic Whiplash detection with Biometric Rigidity detection, the system implements a unified decision rule:
+By combining Semantic Whiplash detection with Interactional Rigidity detection, the system implements a unified decision rule:
 $$\text{BotDecision} = \begin{cases} 
 \text{TRUE (Bot)}, & \text{if } \Delta f \ge 0.20 \quad \text{(Whiplash Regime)} \\
 \text{TRUE (Bot)}, & \text{if } \Delta \kappa = 0.0 \land \Delta u < 0.05 \quad \text{(Rigidity Regime)} \\
@@ -252,7 +252,7 @@ To combat adaptive adversaries who attempt to pre-program LLM personas, we propo
 
 ## Software Availability
 
-- **Software available from:** https://github.com/manya-rishi/medical-honeypot-poc  
+- **Software available from:** https://github.com/kc-agile/behavioral-whiplash  
 - **Archived source code as at time of publication:** https://doi.org/10.5281/zenodo.22874529  
 - **Software Version:** v1.0.0  
 - **License:** MIT License  
@@ -276,7 +276,7 @@ Data are available under the terms of the Creative Commons Attribution 4.0 Inter
 ## Declarations
 
 ### Ethics and Consent
-This study did not involve human participants. The "Human Baseline" cohort utilized in the benchmark evaluation was generated synthetically by calibrating an automated simulator to emit timing profiles (e.g., typing speeds, hesitation intervals, and revision loops) derived from established human keystroke dynamics literature. As no human subjects were involved, institutional review board (IRB) approval and informed consent were not required.
+This study did not involve human participants. The "Synthetic Human Baseline" cohort utilized in the benchmark evaluation was generated synthetically by calibrating an automated simulator to emit timing profiles (e.g., typing speeds, hesitation intervals, and revision loops) derived from established human keystroke dynamics literature. As no human subjects were involved, institutional review board (IRB) approval and informed consent were not required.
 
 ### Author Contributions
 - **Conceptualization:** Krishna Chaitanya Rupavatharam
