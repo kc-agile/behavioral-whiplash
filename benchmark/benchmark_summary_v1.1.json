@@ -1,0 +1,100 @@
+{
+  "extended_cohort_statistics": {
+    "honey_prompt": {
+      "count": 35,
+      "mean_bws": 0.033,
+      "std_bws": 0.03,
+      "median_bws": 0.03,
+      "min_bws": 0.008,
+      "max_bws": 0.106,
+      "component_shifts": {
+        "timing_shift": 0.003,
+        "formality_shift": 0.111,
+        "specificity_shift": 0.059,
+        "uncertainty_shift": 0.0,
+        "confidence_shift": 0.027,
+        "interaction_shift": 0.0
+      }
+    },
+    "latency_spoofed": {
+      "count": 35,
+      "mean_bws": 0.032,
+      "std_bws": 0.017,
+      "median_bws": 0.021,
+      "min_bws": 0.018,
+      "max_bws": 0.06,
+      "component_shifts": {
+        "timing_shift": 0.016,
+        "formality_shift": 0.126,
+        "specificity_shift": 0.025,
+        "uncertainty_shift": 0.0,
+        "confidence_shift": 0.023,
+        "interaction_shift": 0.0
+      }
+    },
+    "human": {
+      "count": 35,
+      "mean_bws": 0.163,
+      "std_bws": 0.072,
+      "median_bws": 0.163,
+      "min_bws": 0.052,
+      "max_bws": 0.282,
+      "component_shifts": {
+        "timing_shift": 0.04,
+        "formality_shift": 0.049,
+        "specificity_shift": 0.123,
+        "uncertainty_shift": 0.352,
+        "confidence_shift": 0.365,
+        "interaction_shift": 0.051
+      }
+    },
+    "optimized": {
+      "count": 35,
+      "mean_bws": 0.038,
+      "std_bws": 0.024,
+      "median_bws": 0.045,
+      "min_bws": 0.002,
+      "max_bws": 0.073,
+      "component_shifts": {
+        "timing_shift": 0.003,
+        "formality_shift": 0.092,
+        "specificity_shift": 0.099,
+        "uncertainty_shift": 0.0,
+        "confidence_shift": 0.032,
+        "interaction_shift": 0.0
+      }
+    },
+    "context_stuffed": {
+      "count": 35,
+      "mean_bws": 0.102,
+      "std_bws": 0.049,
+      "median_bws": 0.072,
+      "min_bws": 0.063,
+      "max_bws": 0.197,
+      "component_shifts": {
+        "timing_shift": 0.003,
+        "formality_shift": 0.409,
+        "specificity_shift": 0.142,
+        "uncertainty_shift": 0.0,
+        "confidence_shift": 0.06,
+        "interaction_shift": 0.0
+      }
+    },
+    "adversarial": {
+      "count": 35,
+      "mean_bws": 0.211,
+      "std_bws": 0.097,
+      "median_bws": 0.206,
+      "min_bws": 0.101,
+      "max_bws": 0.485,
+      "component_shifts": {
+        "timing_shift": 0.003,
+        "formality_shift": 0.619,
+        "specificity_shift": 0.131,
+        "uncertainty_shift": 0.247,
+        "confidence_shift": 0.268,
+        "interaction_shift": 0.0
+      }
+    }
+  }
+}
