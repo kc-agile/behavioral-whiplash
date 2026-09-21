@@ -39,20 +39,38 @@ Outputs:
 ## Repository Structure
 
 ```
-├── server.py                 # Lightweight Python 3 HTTP server & linguistic analysis engine
-├── index.html                # Client interface (Login demo, Honeypot challenge, Dashboard, Simulator)
-├── app.js                    # Client-side telemetry capture & live analytics loader
-├── style.css                 # Clean, responsive research UI styling
-├── run_benchmark.py          # Automated multi-cohort empirical benchmark harness
-├── honeypot.db               # Embedded SQLite research database
-├── data/
+behavioral-whiplash/
+│
+├── README.md                 
+├── LICENSE                   
+├── CITATION.cff              
+│
+├── src/
+│   ├── server.py             # Lightweight Python 3 HTTP server & linguistic analysis engine
+│   └── app.js                # Client-side telemetry capture & live analytics loader
+│
+├── benchmark/
+│   ├── run_benchmark.py      # Automated multi-cohort empirical benchmark harness
 │   ├── benchmark_results.csv # Raw empirical benchmark dataset (N=140)
 │   └── benchmark_summary.json# Aggregate statistical metrics & ROC performance
-└── paper/
-    ├── paper_draft.md        # Full submission-ready F1000Research Software Tool Article
-    ├── main.tex              # Compile-ready LaTeX manuscript
-    ├── references.bib        # BibTeX bibliography
-    └── DATA_DICTIONARY.md    # FAIR-compliant dataset codebook & database schema
+│
+├── data/
+│   └── honeypot.db           # Embedded SQLite research database
+│
+├── web/
+│   ├── index.html            # Client interface (Login, Honeypot, Dashboard, Simulator)
+│   └── style.css             # Clean, responsive research UI styling
+│
+├── paper/
+│   ├── manuscript.md         # Full submission-ready F1000Research Software Tool Article
+│   ├── main.tex              # Compile-ready LaTeX manuscript
+│   ├── references.bib        # BibTeX bibliography
+│   └── DATA_DICTIONARY.md    # FAIR-compliant dataset codebook & database schema
+│
+└── docs/
+    ├── methodology.md        # Detailed breakdown of Whplash methodology
+    ├── threat-model.md       # AI evasion capabilities and Threat Modeling
+    └── reproducibility.md    # Instructions on how to reproduce the baseline data
 ```
 
 ---

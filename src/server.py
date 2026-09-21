@@ -7,7 +7,7 @@ from urllib.error import HTTPError, URLError
 from datetime import datetime, timezone
 
 ROOT = Path(__file__).parent
-DB = ROOT / "honeypot.db"
+DB = ROOT.parent / "data" / "honeypot.db"
 
 def init_db():
     with sqlite3.connect(DB) as c:
@@ -160,6 +160,15 @@ def get_random_scenario():
     }
 
 class Handler(SimpleHTTPRequestHandler):
+    def translate_path(self, path):
+        if path == '/' or path == '/index.html':
+            return str(ROOT.parent / 'web' / 'index.html')
+        elif path == '/style.css':
+            return str(ROOT.parent / 'web' / 'style.css')
+        elif path == '/app.js':
+            return str(ROOT / 'app.js')
+        return super().translate_path(path)
+
     def do_GET(self):
         if self.path == '/api/analytics':
             return self.analytics()

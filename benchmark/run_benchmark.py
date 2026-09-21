@@ -16,10 +16,12 @@ Outputs:
 import sqlite3, uuid, json, csv, math, random
 from pathlib import Path
 from datetime import datetime, timezone
+import sys
+sys.path.append(str(Path(__file__).parent.parent / 'src'))
 import server
 
 ROOT = Path(__file__).parent
-DB = ROOT / "honeypot.db"
+DB = ROOT.parent / "data" / "honeypot.db"
 CSV_OUT = ROOT / "benchmark_results.csv"
 JSON_OUT = ROOT / "benchmark_summary.json"
 
