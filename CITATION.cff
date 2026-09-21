@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Rupavatharam
+    given-names: Krishna Chaitanya
+    email: kc191213@gmail.com
+title: "Behavioral Whiplash: An Open-Source Behavioral Honeypot and Keystroke Telemetry Suite"
+version: 1.0.0
+date-released: 2026-09-21
+url: "https://github.com/kc-agile/behavioral-whiplash"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Rupavatharam
+      given-names: Krishna Chaitanya
+  title: "Behavioral Whiplash: An Open-Source Behavioral Honeypot and Keystroke Telemetry Suite for Exposing LLM Agent Discontinuities in Multi-Turn Verification"
+  journal: "F1000Research"
+  year: 2026
