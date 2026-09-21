@@ -130,18 +130,22 @@ Navigate to \texttt{http://localhost:8000}. To execute automated benchmarks:
 \begin{lstlisting}[language=bash]
 python benchmark/run_benchmark.py
 \end{lstlisting}
-Live Gemini model integration can be activated by setting the \texttt{GEMINI\_API\_KEY} environment variable.
 
-\section*{Use Cases \& Results}
-
-\subsection*{Benchmark Evaluation}
-We executed $N=140$ multi-turn verification sessions across four distinct cohorts ($N=35$ each):
+\section*{Methodology}
+The Behavioral Whiplash CAPTCHA requires a two-turn chat interaction where users submit clinical symptoms. A background analytics module computes real-time keystroke density, edit distance, response latency, and grammatical formalism (Gunning Fog, POS-tag ratios). To evaluate the mechanism, the benchmark was extended with synthetic treatment cohorts representing two active-defense scenarios, generating six benchmark cohorts ($N=35$ synthetic benchmark trials per cohort, sampled with replacement from five predefined response-pair templates, total $N=210$):
 \begin{enumerate}
     \item \textbf{Synthetic Human Baseline:} Calibrated organic typing cadences (220--320 CPM), initial cognitive hesitations (1100--2600 ms), and active revision loops (2--7 deletions).
     \item \textbf{Optimized AI:} Unsteered clinical reasoning LLM agents generating formal, high-density outputs via programmatic paste.
     \item \textbf{Adversarial AI:} Multi-turn steered LLMs instructed to sound like casual uncertain humans on Turn 2.
     \item \textbf{Latency-Spoofed AI:} Automated agents injecting $5.5-8.5$ seconds of artificial sleep before instant paste.
+    \item \textbf{Honey-Prompt AI:} Synthetic adversarial responses conditioned on the honey-prompt scenario.
+    \item \textbf{Context-Stuffed AI:} Synthetic adversarial responses conditioned on the noise-payload scenario.
 \end{enumerate}
+
+\section*{Use Cases \& Results}
+
+\subsection*{Benchmark Evaluation}
+We generated $N=210$ synthetic benchmark trials across six distinct cohorts ($N=35$ each):
 
 \begin{table}[h!]
 \centering
@@ -154,9 +158,11 @@ Synthetic Human Baseline & 35 & 0.163 & 0.072 & 0.163 & 0.040 & \textbf{0.049} &
 Optimized AI & 35 & 0.038 & 0.024 & 0.045 & 0.003 & 0.092 & \textbf{0.000} & \textbf{0.000} \\
 Adversarial AI & 35 & 0.211 & 0.097 & 0.206 & 0.003 & \textbf{0.619} & 0.247 & \textbf{0.000} \\
 Latency-Spoofed AI & 35 & 0.032 & 0.017 & 0.021 & 0.016 & 0.126 & \textbf{0.000} & \textbf{0.000} \\
+Honey-Prompt AI & 35 & 0.033 & 0.030 & 0.030 & 0.003 & 0.111 & \textbf{0.000} & \textbf{0.000} \\
+Context-Stuffed AI & 35 & 0.102 & 0.049 & 0.072 & 0.003 & \textbf{0.409} & \textbf{0.000} & \textbf{0.000} \\
 \bottomrule
 \end{tabular}
-\caption{Empirical transition divergence metrics across benchmark evaluation cohorts.}
+\caption{Empirical transition divergence metrics across empirical and synthetic treatment benchmark cohorts.}
 \label{tab:results}
 \end{table}
 
@@ -166,7 +172,7 @@ As shown in Table~\ref{tab:results}, automated agents exhibit two distinct failu
     \item \textbf{The Semantic Whiplash Effect:} Adversarial AI agents attempting to mimic human colloquialism produce an extreme register collapse ($\Delta f = 0.619 \pm 0.177$) compared to the synthetic human baseline ($\Delta f = 0.049 \pm 0.038$, Mann--Whitney $U=1225$, $p=5.33 \times 10^{-13}$), yielding an \textbf{ROC-AUC of 1.000}.
     \item \textbf{Cognitive and Interactional Rigidity:} Unsteered bots (Optimized and Latency-Spoofed) display zero epistemic uncertainty shift ($\Delta u = 0.000$) and zero interaction editing ($\Delta \kappa = 0.000$).
 \end{enumerate}
-A composite decision rule evaluating $\Delta f \ge 0.20$ or $(\Delta \kappa = 0 \land \Delta u < 0.05)$ achieved \textbf{100\% classification accuracy} with an \textbf{F1-score of 1.000} across all 140 benchmark sessions.
+A composite decision rule evaluating $\Delta f \ge 0.20$ or $(\Delta \kappa = 0 \land \Delta u < 0.05)$ achieved \textbf{100\% classification accuracy} with an \textbf{F1-score of 1.000} across all 210 benchmark sessions.
 
 \section*{Discussion}
 Behavioral Whiplash establishes that multi-turn cognitive transitions offer a resilient verification channel that cannot be defeated by simple prompt steering or latency spoofing. Bot operators forced to optimize both semantic register continuity and fine-grained keystroke revision dynamics face combinatorial complexity. The software enables rapid experimentation, educational demonstration, and integration into web triage endpoints.
@@ -175,12 +181,12 @@ Behavioral Whiplash establishes that multi-turn cognitive transitions offer a re
 \begin{itemize}
     \item \textbf{Software repository:} \url{https://github.com/kc-agile/behavioral-whiplash}
     \item \textbf{Archived source code at publication:} \url{https://doi.org/10.5281/zenodo.22874529}
-    \item \textbf{Version:} v1.0.0
+    \item \textbf{Version:} v1.1.0
     \item \textbf{License:} MIT License
 \end{itemize}
 
 \section*{Data Availability}
-The raw dataset (\texttt{benchmark\_results.csv}, \texttt{benchmark\_summary.json}, and \texttt{honeypot.db}) is deposited in the project repository under CC-BY 4.0.
+The raw dataset (\texttt{benchmark\_results\_v1.1.csv}, \texttt{benchmark\_summary\_v1.1.json}, and \texttt{honeypot.db}) is deposited in the project repository under CC-BY 4.0.
 
 \section*{Declarations}
 \noindent\textbf{Author Contributions:} Conceived the model, designed the software, executed the benchmark suite, and authored the manuscript.\\
