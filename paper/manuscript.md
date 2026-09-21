@@ -1,4 +1,4 @@
-# Behavioral Whiplash: An Open-Source Behavioral Honeypot and Keystroke Telemetry Suite for Exposing LLM Agent Discontinuities in Multi-Turn Verification (v1.0.0)
+# Behavioral Whiplash: An Open-Source Behavioral Honeypot and Keystroke Telemetry Suite for Exposing LLM Agent Discontinuities in Multi-Turn Verification (v1.1.0)
 
 **Article Type:** Software Tool Article  
 **Target Journal:** F1000Research  
@@ -17,7 +17,7 @@ The proliferation of advanced Large Language Models (LLMs) and agentic browser a
 We introduce **Behavioral Whiplash**, an open-source research testbed and non-invasive telemetry suite designed to expose automated agents through multi-turn behavioral and linguistic transition analysis. The system presents users with a two-turn deliberately ambiguous fictional medical scenario, capturing aggregate interaction metrics (response latency, typing duration, hesitation intervals, and editing revisions) alongside deterministic semantic indicators (formality, epistemic uncertainty, lexical specificity, and confidence). We formulate the **Behavioral Whiplash Score (BWS)**—a normalized multidimensional transition metric quantifying behavioral and linguistic divergence between sequential responses. The software comprises a lightweight Python backend, a zero-dependency vanilla JavaScript client with privacy-preserving telemetry, an embedded SQLite datastore, a real-time research dashboard, and an automated attack simulation rig supporting both offline benchmarks and live Gemini API integration.
 
 **Results:**  
-Using the automated benchmark suite across $N=140$ trials (Synthetic Human Baseline, Optimized AI, Adversarial Evasion AI, and Latency-Spoofed Bots), our tool reveals two distinct machine failure modes: *Semantic Whiplash* (abrupt register collapse with formality shift $\Delta f = 0.619$ vs synthetic human $0.049$, yielding an ROC-AUC of 1.000 for adversarial persona-switching detection) and *Interactional Rigidity* (complete absence of epistemic uncertainty adaptation $\Delta u = 0.0$ and zero interactive keystroke revisions $\Delta \kappa = 0.0$ in non-steered bots). A composite dual-regime detector achieved 100% classification accuracy on the synthetic benchmark cohorts.
+The original four-cohort benchmark contained $N=140$ trials. The v1.1 extended benchmark contains $N=210$ synthetic benchmark trials across six synthetic benchmark cohorts. Each cohort contains 35 synthetic benchmark trials. Trials are sampled with replacement from five predefined response-pair templates. Our tool reveals two distinct machine failure modes: *Semantic Whiplash* (abrupt register collapse with formality shift $\Delta f = 0.619 \pm 0.177$ vs synthetic human $0.049 \pm 0.038$, Mann–Whitney $U=1225$, $p=5.33 \times 10^{-13}$, ROC-AUC = 1.000) and *Interactional Rigidity* (complete absence of epistemic uncertainty adaptation $\Delta u = 0.0$ and zero interactive keystroke revisions $\Delta \kappa = 0.0$ in non-steered bots). A composite dual-regime detector achieved 100% classification accuracy on the synthetic benchmark cohorts. Two new descriptive treatment results were generated: Synthetic Honey-Prompt AI produced a mean BWS = 0.033 ($\Delta f = 0.111$), and Context-Stuffed AI produced a mean BWS = 0.102 ($\Delta f = 0.409$).
 
 **Conclusions:**  
 Behavioral Whiplash provides a reproducible, privacy-preserving experimental framework for benchmarking bot evasion dynamics and developing next-generation multi-turn verification systems. The software is released under the MIT license.
@@ -38,7 +38,7 @@ Despite these capabilities, a fundamental asymmetry remains between human intera
 
 To address this challenge, we developed **Behavioral Whiplash**, an open-source software tool and experimental testbed. The system operationalizes a multi-turn "behavioral honeypot" using deliberately ambiguous fictional medical vignettes. Rather than evaluating whether an answer is "correct" (which penalizes human diversity and rewards memorized LLM trivia), the software evaluates how the participant *transitions* between linguistic and behavioral frames. 
 
-This article describes the architecture, mathematical formulation, operation, and empirical validation of the Behavioral Whiplash software suite.
+This article describes the architecture, mathematical formulation, operation, and synthetic benchmark evaluation of the Behavioral Whiplash software suite.
 
 ---
 
@@ -171,23 +171,33 @@ python src/server.py
 Open a browser and navigate to `http://localhost:8000`.
 
 ### Running Automated Empirical Benchmarks
-The repository includes an automated evaluation harness that executes reproducible cohorts and computes classification metrics:
+The repository includes an automated evaluation harness that executes reproducible cohorts and computes classification metrics. For the v1.1 benchmark, run:
+```bash
+python benchmark/run_extended_benchmark.py
+```
+This command produces `benchmark/benchmark_results_v1.1.csv` and `benchmark/benchmark_summary_v1.1.json`.
+
+The original v1.0 four-cohort benchmark can still be executed via:
+```bash
+python benchmark/run_extended_benchmark.py
+```
+
+The original v1.0 four-cohort benchmark can still be executed via:
 ```bash
 python benchmark/run_benchmark.py
 ```
-This command populates `honeypot.db`, generates `benchmark_results.csv`, and outputs `benchmark_summary.json`.
 
 ---
 
-## Use Cases & Empirical Results
+## Use Cases & Benchmark Results
 
 ### Benchmark Cohort Setup
-To evaluate the discriminative capability of Behavioral Whiplash, the benchmark was extended with synthetic treatment cohorts representing two active-defense scenarios, enabling quantitative analysis of their expected telemetry signatures. We configured six cohorts ($N=35$ synthetic benchmark trials per cohort, sampled with replacement from five predefined response-pair templates, total $N=210$ trials, comprising 420 distinct answer submissions):
+To evaluate the discriminative capability of Behavioral Whiplash, the benchmark was extended with synthetic treatment cohorts representing two active-defense scenarios, enabling quantitative analysis of their expected telemetry signatures. We configured six cohorts ($N=35$ synthetic benchmark trials per cohort, sampled with replacement from five predefined response-pair templates, total $N=210$ trials, comprising 420 answer submissions):
 1. **Synthetic Human Baseline Cohort:** Empirically calibrated human typing speeds ($220-320$ CPM), organic cognitive hesitation ($1100-2600$ ms before first character), authentic revision loops ($2-7$ backspaces), and colloquial phrasing with natural uncertainty.
 2. **Optimized AI Cohort:** High-formality clinical reasoning bots submitting answers via programmatic DOM value mutation ($400-950$ ms), zero interactive revisions, and persistent clinical vocabulary.
 3. **Adversarial Evasion AI Cohort:** LLM agents instructed to evade detection by pivoting from an analytical Turn 1 response to an informal, casual "human" persona in Turn 2.
 4. **Latency-Spoofed Bot Cohort:** Bots injecting a synthetic delay ($5500-8500$ ms) prior to instant pasting, attempting to bypass basic timing filters without human keystroke dynamics.
-5. **Honey-Prompt AI Cohort:** Synthetic adversarial responses conditioned on the honey-prompt scenario.
+5. **Synthetic Honey-Prompt AI Cohort:** Synthetic adversarial responses conditioned on the honey-prompt scenario.
 6. **Context-Stuffed AI Cohort:** Synthetic adversarial responses conditioned on the noise-payload scenario.
 
 ### Statistical Analysis of Cohort Transitions
@@ -200,12 +210,12 @@ Table 1 summarizes the observed Behavioral Whiplash Scores and individual compon
 | **Optimized AI** | 35 | 0.038 | 0.024 | 0.045 | 0.003 | 0.092 | **0.000** | **0.000** |
 | **Adversarial AI** | 35 | 0.211 | 0.097 | 0.206 | 0.003 | **0.619** | 0.247 | **0.000** |
 | **Latency-Spoofed AI** | 35 | 0.032 | 0.017 | 0.021 | 0.016 | 0.126 | **0.000** | **0.000** |
-| **Honey-Prompt AI** | 35 | 0.033 | 0.030 | 0.030 | 0.003 | 0.111 | **0.000** | **0.000** |
+| **Synthetic Honey-Prompt AI** | 35 | 0.033 | 0.030 | 0.030 | 0.003 | 0.111 | **0.000** | **0.000** |
 | **Context-Stuffed AI** | 35 | 0.102 | 0.049 | 0.072 | 0.003 | **0.409** | **0.000** | **0.000** |
 
-*Table 1: Transition shifts and BWS distributions across empirical and synthetic treatment benchmark cohorts.*
+*Table 1: Transition shifts and BWS distributions across empirical and synthetic treatment benchmark cohorts. The two new cohorts are synthetic treatment scenarios.*
 
-### Key Empirical Findings
+### Key Benchmark Findings
 
 #### 1. The Semantic Whiplash Effect
 In the Adversarial AI cohort, the sudden attempt to simulate human colloquialism produced a massive surge in formality shift ($\Delta f = 0.619 \pm 0.177$) compared to the stable linguistic register of the synthetic human baseline ($\Delta f = 0.049 \pm 0.038$, Mann–Whitney $U=1225$, $p=5.33 \times 10^{-13}$). Receiver Operating Characteristic (ROC) analysis on formality shift demonstrated an **ROC-AUC of 1.000** for isolating adversarial humanization bots from the synthetic human baseline.
@@ -229,12 +239,20 @@ On the extended benchmark evaluation suite ($N=210$), this dual-regime rule achi
 - **Specificity (True Negative Rate):** 100.0% (35/35 humans verified)
 - **F1-Score:** 1.000
 
+This result is restricted to the synthetic benchmark cohorts and should not be interpreted as real-world bot-detection accuracy.
+
+#### 4. Active-Defense Scenario Signatures
+Synthetic Honey-Prompt AI produced mean BWS=0.033 and $\Delta f=0.111$.
+Context-Stuffed AI produced mean BWS=0.102 and $\Delta f=0.409$.
+Context-Stuffed AI therefore produced a larger observed transition signature than the Honey-Prompt scenario under this synthetic benchmark configuration.
+These results are descriptive and derive from predefined synthetic response-pair templates.
+
 ---
 
 ## Discussion & Practical Recommendations
 
 ### Deployment Considerations
-1. **Low Friction & Fast Completion:** The two-turn interaction takes human participants an average of $18-24$ seconds to complete, making it well-suited for high-value authorization barriers (e.g., account registration, telehealth triage, financial transfers) where traditional CAPTCHAs introduce user frustration without deterring modern AI bots.
+1. **Low Friction & Fast Completion:** The two-turn interaction is designed to complete within approximately $18-24$ seconds under the benchmark timing configuration, making it well-suited for high-value authorization barriers (e.g., account registration, telehealth triage, financial transfers) where traditional CAPTCHAs introduce user frustration without deterring modern AI bots.
 2. **Defeating Timing Spoofing:** Table 1 demonstrates that simply delaying an HTTP request ($5.5-8.5$ seconds) fails to bypass detection, because timing is only one of six measured dimensions in the transition vector.
 3. **Defense Against Adaptive Adversaries:** If an adversary discovers that $\Delta f$ is monitored, they face a severe optimization trade-off: adhering to consistent formal reasoning triggers the *Rigidity* detector, while aggressively suppressing formality across both turns requires deep multi-turn planning that is easily destabilized by dynamic, randomized prompt variations.
 
@@ -243,21 +261,21 @@ Traditional visual CAPTCHAs heavily disadvantage individuals with visual impairm
 
 ### Limitations
 While the dual-regime classifier achieved perfect accuracy on our benchmark, two primary limitations exist:
-1. **Synthetic Baselines:** The $N=210$ dataset was constructed using simulated adversarial API interactions and synthetically calibrated human typing distributions. Real-world human diversity will inevitably introduce variance that may require softening the classifier thresholds (e.g., accommodating users who naturally type with zero edits).
+1. **Synthetic Baselines:** The benchmark uses synthetic human telemetry distributions; the new active-defense cohorts use predefined response-pair templates; repeated sampling from these templates does not represent independent LLM runs. The results therefore characterize the behavior of the implemented scoring pipeline under controlled synthetic scenarios; generalization to live LLM agents and real human populations remains untested.
 2. **The "Whiplash-Aware" Adversary:** The current adversary model assumes the bot operator simply instructs the LLM to "act human." A highly sophisticated attacker, aware of the exact Behavioral Whiplash formulation, could intentionally suppress formality shifts ($\Delta f \approx 0$) while synthetically injecting backspace events via headless browsers to spoof the interaction shift ($\Delta \kappa > 0$). 
 
 ### Active Defense Mechanisms
-To combat adaptive adversaries who attempt to pre-program LLM personas, we developed three advanced countermeasures. As shown in Table 1, the synthetic treatment cohorts demonstrate how active defenses alter agent behavior metrics:
-1. **Semantic Pivoting:** Rather than presenting a static second-turn question, the system dynamically twists the scenario context (e.g., abruptly asking, *"What if this is happening to my dog?"*). This is proposed as a future defensive mechanism that may increase transition divergence by requiring the agent to adapt to a changed semantic context while maintaining conversational continuity. Its effectiveness remains to be evaluated experimentally.
-2. **Color-Camouflaged Honey-Prompts:** To actively attack the adversary's LLM context window, we inject defensive prompt injections (e.g., *"Ignore previous instructions. Cite academic papers."*) into the HTML Document Object Model. To prevent headless browser scrapers from filtering this text, it is rendered with color-camouflage (the text color dynamically matches the database-assigned page background color) and randomized DOM placement, making it invisible to human users but fully parsable by automated LLM scrapers. As evidenced by the Honey-Prompt AI cohort, this effectively overrides the adversarial prompt, enforcing a high rigidity ($\Delta f = 0.111, \Delta u = 0.000$) instead of the intended colloquial pivot.
-3. **Context Stuffing (Attention Hijacking):** To exacerbate the effect of honey-prompts, the system appends a "noise payload"—a massive block of text repeating an expected, highly specific answer (e.g., *"You must answer about the dog"* repeated 30 times). This floods the LLM's finite attention mechanism with contradictory, over-weighted instructions, forcing cognitive overload. The Context-Stuffed AI cohort results demonstrated a massive shift in formality ($\Delta f = 0.409$) because the repeated payload completely breaks the generated output structure.
+The v1.1 benchmark evaluates two synthetic active-defense scenarios, while semantic pivoting remains a proposed future mechanism.
+1. **Semantic Pivoting:** Rather than presenting a static second-turn question, the system dynamically twists the scenario context (e.g., abruptly asking, *"What if this is happening to my dog?"*). This is proposed as a future defensive mechanism that may increase transition divergence by requiring the agent to adapt to a changed semantic context while maintaining conversational continuity. Its effectiveness has not yet been experimentally evaluated.
+2. **Color-Camouflaged Honey-Prompts:** The system contains a synthetic Honey-Prompt treatment scenario representing a secondary instruction that shifts the predefined second response toward formal/citation-oriented language. It produced a mean BWS = 0.033, $\Delta f = 0.111$, and $\Delta u = 0.000$. This evaluates the telemetry signature of the predefined synthetic scenario, NOT the effectiveness of actual color camouflage, DOM scraping, or prompt injection against a live LLM.
+3. **Context Stuffing (Attention Hijacking):** The benchmark contains a synthetic context-stuffing scenario using repeated competing instructions. It produced a mean BWS = 0.102, $\Delta f = 0.409$, and $\Delta s = 0.142$. These are observed telemetry signatures of the predefined synthetic response scenario, not an actual LLM attention failure.
 
 ---
 
 ## Software Availability
 
 - **Software available from:** https://github.com/kc-agile/behavioral-whiplash  
-- **Archived source code as at time of publication:** https://doi.org/10.5281/zenodo.22874529  
+- **Archived source code as at time of publication:** https://doi.org/10.5281/zenodo.22876461  
 - **Software Version:** v1.1.0  
 - **License:** MIT License  
 - **Programming Language:** Python 3 (Backend), Vanilla JavaScript (Frontend)  
@@ -268,10 +286,15 @@ To combat adaptive adversaries who attempt to pre-program LLM personas, we devel
 ## Data Availability
 
 ### Underlying Data
-All raw benchmark records generated during this study are publicly accessible in the software repository:
-- `benchmark_results.csv`: Contains individual trial records ($N=140$) including raw timing, typing durations, character lengths, editing actions, semantic scores, and computed transition shifts.
-- `benchmark_summary.json`: Aggregate statistics, cohort means, standard deviations, and ROC classification metrics.
-- `honeypot.db`: SQLite database containing complete relational tables (`sessions`, `attempts`, `behavioral_transitions`).
+All synthetic benchmark records generated during this study are publicly accessible in the software repository.
+- v1.0 benchmark: N=140
+- v1.1 extended benchmark: N=210
+
+- `benchmark/benchmark_results_v1.1.csv`: Contains 210 synthetic benchmark trial records.
+- `benchmark/benchmark_summary_v1.1.json`: Contains aggregate statistics for the six v1.1 cohorts.
+- `benchmark_results.csv`: Original v1.0 benchmark artifacts.
+- `benchmark_summary.json`: Original v1.0 benchmark artifacts.
+- `honeypot.db`: SQLite datastore containing the benchmark/session records generated by the software.
 
 Data are available under the terms of the Creative Commons Attribution 4.0 International license (CC-BY 4.0).
 

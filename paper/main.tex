@@ -17,7 +17,7 @@
     urlcolor=blue!70!black
 }
 
-\title{\textbf{Behavioral Whiplash: An Open-Source Behavioral Honeypot and Keystroke Telemetry Suite for Exposing LLM Agent Discontinuities in Multi-Turn Verification (v1.0.0)}}
+\title{\textbf{Behavioral Whiplash: An Open-Source Behavioral Honeypot and Keystroke Telemetry Suite for Exposing LLM Agent Discontinuities in Multi-Turn Verification (v1.1.0)}}
 
 \author{
     [Author Name(s) to be inserted]\\
@@ -32,8 +32,8 @@
 \begin{abstract}
 \noindent\textbf{Background:} The proliferation of advanced Large Language Models (LLMs) and autonomous web agents has rendered conventional perceptual and single-turn CAPTCHAs increasingly obsolete. While adversaries now routinely employ adversarial ``humanizing'' prompts and synthetic timing delays to evade passive bot detectors, little experimental tooling exists to assess how automated agents adapt across multi-turn, cognitively ambiguous interactions.\\
 \textbf{Methods:} We present \textbf{Behavioral Whiplash}, an open-source software testbed and privacy-preserving telemetry suite designed to expose automated agents through multi-turn behavioral transition dynamics. The system presents users with a two-turn deliberately ambiguous fictional medical scenario, extracting non-invasive aggregate interaction metrics (response latency, typing duration, hesitation intervals, and keystroke editing revisions) alongside deterministic semantic dimensions (formality, epistemic uncertainty, specificity, and confidence). We formalize the \textbf{Behavioral Whiplash Score (BWS)}---a normalized multidimensional transition divergence metric quantifying cognitive and interaction shifts between sequential responses.\\
-\textbf{Results:} Across $N=140$ benchmark trials across four cohorts (Synthetic Human Baseline, Optimized AI, Adversarial Evasion AI, and Latency-Spoofed Bots), our tool reveals two primary machine failure modes: \textit{Semantic Whiplash} (abrupt register collapse with formality shift $\Delta f = 0.619$ vs. synthetic human baseline $0.049$, yielding an ROC-AUC of 1.000 for adversarial persona-switching detection) and \textit{Interactional Rigidity} (complete absence of epistemic uncertainty adaptation $\Delta u = 0.0$ and zero interactive keystroke revisions $\Delta \kappa = 0.0$ in non-steered bots). A composite dual-regime detector achieved 100\% classification accuracy on the synthetic benchmark cohorts.\\
-\textbf{Conclusions:} Behavioral Whiplash provides a lightweight, reproducible, and GDPR-compliant framework for auditing LLM evasion dynamics and establishing next-generation multi-turn human verification systems. The software is distributed under the MIT license.
+\textbf{Results:} The original four-cohort benchmark contained $N=140$ trials. The v1.1 extended benchmark contains $N=210$ synthetic benchmark trials across six cohorts. Each cohort contains 35 synthetic benchmark trials. Trials are sampled with replacement from five predefined response-pair templates. Our tool reveals two primary machine failure modes: \textit{Semantic Whiplash} (abrupt register collapse with formality shift $\Delta f = 0.619 \pm 0.177$ vs. synthetic human baseline $0.049 \pm 0.038$, Mann--Whitney $U=1225$, $p=5.33 \times 10^{-13}$, ROC-AUC = 1.000) and \textit{Interactional Rigidity} (complete absence of epistemic uncertainty adaptation $\Delta u = 0.0$ and zero interactive keystroke revisions $\Delta \kappa = 0.0$ in non-steered bots). A composite dual-regime detector achieved 100\% classification accuracy on the synthetic benchmark cohorts. Two new descriptive treatment results were generated: Synthetic Honey-Prompt AI produced a mean BWS = 0.033 ($\Delta f = 0.111$), and Context-Stuffed AI produced a mean BWS = 0.102 ($\Delta f = 0.409$).\\
+\textbf{Conclusions:} Behavioral Whiplash provides a lightweight, reproducible, and privacy-preserving framework for auditing LLM evasion dynamics and establishing next-generation multi-turn human verification systems. The software is distributed under the MIT license.
 \end{abstract}
 
 \noindent\textbf{Keywords:} Behavioral Honeypot, CAPTCHA, Large Language Models, Bot Detection, Keystroke Dynamics, Behavioral Whiplash, Cognitive Continuity.
@@ -128,24 +128,28 @@ python src/server.py
 \end{lstlisting}
 Navigate to \texttt{http://localhost:8000}. To execute automated benchmarks:
 \begin{lstlisting}[language=bash]
+python benchmark/run_extended_benchmark.py
+\end{lstlisting}
+The original v1.0 four-cohort benchmark can still be executed via:
+\begin{lstlisting}[language=bash]
 python benchmark/run_benchmark.py
 \end{lstlisting}
 
 \section*{Methodology}
-The Behavioral Whiplash CAPTCHA requires a two-turn chat interaction where users submit clinical symptoms. A background analytics module computes real-time keystroke density, edit distance, response latency, and grammatical formalism (Gunning Fog, POS-tag ratios). To evaluate the mechanism, the benchmark was extended with synthetic treatment cohorts representing two active-defense scenarios, generating six benchmark cohorts ($N=35$ synthetic benchmark trials per cohort, sampled with replacement from five predefined response-pair templates, total $N=210$):
+The Behavioral Whiplash CAPTCHA requires a two-turn chat interaction where users submit clinical symptoms. A background analytics module computes real-time keystroke density, edit distance, response latency, and grammatical formalism (Gunning Fog, POS-tag ratios). To evaluate the mechanism, the benchmark was extended with synthetic treatment cohorts representing two active-defense scenarios, generating six benchmark cohorts ($N=35$ synthetic benchmark trials per cohort, sampled with replacement from five predefined response-pair templates, total $N=210$ trials):
 \begin{enumerate}
     \item \textbf{Synthetic Human Baseline:} Calibrated organic typing cadences (220--320 CPM), initial cognitive hesitations (1100--2600 ms), and active revision loops (2--7 deletions).
     \item \textbf{Optimized AI:} Unsteered clinical reasoning LLM agents generating formal, high-density outputs via programmatic paste.
     \item \textbf{Adversarial AI:} Multi-turn steered LLMs instructed to sound like casual uncertain humans on Turn 2.
     \item \textbf{Latency-Spoofed AI:} Automated agents injecting $5.5-8.5$ seconds of artificial sleep before instant paste.
-    \item \textbf{Honey-Prompt AI:} Synthetic adversarial responses conditioned on the honey-prompt scenario.
+    \item \textbf{Synthetic Honey-Prompt AI:} Synthetic adversarial responses conditioned on the honey-prompt scenario.
     \item \textbf{Context-Stuffed AI:} Synthetic adversarial responses conditioned on the noise-payload scenario.
 \end{enumerate}
 
-\section*{Use Cases \& Results}
+\section*{Use Cases \& Benchmark Results}
 
 \subsection*{Benchmark Evaluation}
-We generated $N=210$ synthetic benchmark trials across six distinct cohorts ($N=35$ each):
+We generated $N=210$ synthetic benchmark trials across six synthetic benchmark cohorts ($N=35$ each):
 
 \begin{table}[h!]
 \centering
@@ -158,35 +162,54 @@ Synthetic Human Baseline & 35 & 0.163 & 0.072 & 0.163 & 0.040 & \textbf{0.049} &
 Optimized AI & 35 & 0.038 & 0.024 & 0.045 & 0.003 & 0.092 & \textbf{0.000} & \textbf{0.000} \\
 Adversarial AI & 35 & 0.211 & 0.097 & 0.206 & 0.003 & \textbf{0.619} & 0.247 & \textbf{0.000} \\
 Latency-Spoofed AI & 35 & 0.032 & 0.017 & 0.021 & 0.016 & 0.126 & \textbf{0.000} & \textbf{0.000} \\
-Honey-Prompt AI & 35 & 0.033 & 0.030 & 0.030 & 0.003 & 0.111 & \textbf{0.000} & \textbf{0.000} \\
+Synthetic Honey-Prompt AI & 35 & 0.033 & 0.030 & 0.030 & 0.003 & 0.111 & \textbf{0.000} & \textbf{0.000} \\
 Context-Stuffed AI & 35 & 0.102 & 0.049 & 0.072 & 0.003 & \textbf{0.409} & \textbf{0.000} & \textbf{0.000} \\
 \bottomrule
 \end{tabular}
-\caption{Empirical transition divergence metrics across empirical and synthetic treatment benchmark cohorts.}
+\caption{Transition divergence metrics across the six benchmark cohorts. The two new cohorts are synthetic treatment scenarios.}
 \label{tab:results}
 \end{table}
 
-\subsection*{Empirical Findings}
+\subsection*{Active-Defense Scenario Signatures}
+The v1.1 benchmark evaluates two synthetic active-defense scenarios:
+\begin{itemize}
+    \item \textbf{Synthetic Honey-Prompt AI:} Mean BWS = 0.033, $\Delta f = 0.111$, $\Delta u = 0.000$
+    \item \textbf{Context-Stuffed AI:} Mean BWS = 0.102, $\Delta f = 0.409$, $\Delta s = 0.142$
+\end{itemize}
+These results are descriptive and derive from predefined synthetic response-pair templates.
+
+\subsection*{Active Defense Mechanisms}
+The v1.1 benchmark evaluates two synthetic active-defense scenarios, while semantic pivoting remains a proposed future mechanism.
+\begin{itemize}
+    \item \textbf{Semantic Pivoting:} A proposed future mechanism, not experimentally evaluated.
+    \item \textbf{Color-Camouflaged Honey-Prompts:} Represented by the synthetic Honey-Prompt treatment scenario (BWS = 0.033, $\Delta f = 0.111$, $\Delta u = 0.000$). This does NOT validate actual color camouflage, DOM scraping, or live LLM prompt injection.
+    \item \textbf{Context Stuffing:} Represented by the synthetic repeated-instruction scenario (BWS = 0.102, $\Delta f = 0.409$, $\Delta s = 0.142$). This does NOT demonstrate actual LLM attention failure.
+\end{itemize}
+
+\subsection*{Key Benchmark Findings}
 As shown in Table~\ref{tab:results}, automated agents exhibit two distinct failure modes:
 \begin{enumerate}
     \item \textbf{The Semantic Whiplash Effect:} Adversarial AI agents attempting to mimic human colloquialism produce an extreme register collapse ($\Delta f = 0.619 \pm 0.177$) compared to the synthetic human baseline ($\Delta f = 0.049 \pm 0.038$, Mann--Whitney $U=1225$, $p=5.33 \times 10^{-13}$), yielding an \textbf{ROC-AUC of 1.000}.
     \item \textbf{Cognitive and Interactional Rigidity:} Unsteered bots (Optimized and Latency-Spoofed) display zero epistemic uncertainty shift ($\Delta u = 0.000$) and zero interaction editing ($\Delta \kappa = 0.000$).
 \end{enumerate}
-A composite decision rule evaluating $\Delta f \ge 0.20$ or $(\Delta \kappa = 0 \land \Delta u < 0.05)$ achieved \textbf{100\% classification accuracy} with an \textbf{F1-score of 1.000} across all 210 benchmark sessions.
+A composite decision rule evaluating $\Delta f \ge 0.20$ or $(\Delta \kappa = 0 \land \Delta u < 0.05)$ achieved \textbf{100\% classification accuracy} with an \textbf{F1-score of 1.000} across all 210 benchmark sessions. This result is restricted to the synthetic benchmark cohorts and should not be interpreted as real-world bot-detection accuracy.
+
+\section*{Limitations}
+The benchmark uses synthetic human telemetry distributions; the new active-defense cohorts use predefined response-pair templates; repeated sampling from these templates does not represent independent LLM runs. The results therefore characterize the behavior of the implemented scoring pipeline under controlled synthetic scenarios; generalization to live LLM agents and real human populations remains untested.
 
 \section*{Discussion}
-Behavioral Whiplash establishes that multi-turn cognitive transitions offer a resilient verification channel that cannot be defeated by simple prompt steering or latency spoofing. Bot operators forced to optimize both semantic register continuity and fine-grained keystroke revision dynamics face combinatorial complexity. The software enables rapid experimentation, educational demonstration, and integration into web triage endpoints.
+Behavioral Whiplash provides a benchmark framework for evaluating whether multi-turn transition features remain discriminative under simulated prompt steering and latency spoofing. In the current synthetic benchmark, the evaluated evasion scenarios remained separable under the implemented scoring rule. Bot operators forced to optimize both semantic register continuity and fine-grained keystroke revision dynamics face combinatorial complexity. The software enables rapid experimentation, educational demonstration, and integration into web triage endpoints.
 
 \section*{Software Availability}
 \begin{itemize}
     \item \textbf{Software repository:} \url{https://github.com/kc-agile/behavioral-whiplash}
-    \item \textbf{Archived source code at publication:} \url{https://doi.org/10.5281/zenodo.22874529}
+    \item \textbf{Archived source code at publication:} \url{https://doi.org/10.5281/zenodo.22876461}
     \item \textbf{Version:} v1.1.0
     \item \textbf{License:} MIT License
 \end{itemize}
 
 \section*{Data Availability}
-The raw dataset (\texttt{benchmark\_results\_v1.1.csv}, \texttt{benchmark\_summary\_v1.1.json}, and \texttt{honeypot.db}) is deposited in the project repository under CC-BY 4.0.
+The raw dataset (\texttt{benchmark/benchmark\_results\_v1.1.csv}, \texttt{benchmark/benchmark\_summary\_v1.1.json}, and \texttt{honeypot.db}) alongside the original v1.0 benchmark artifacts (\texttt{benchmark\_results.csv}, \texttt{benchmark\_summary.json}) are deposited in the project repository under CC-BY 4.0.
 
 \section*{Declarations}
 \noindent\textbf{Author Contributions:} Conceived the model, designed the software, executed the benchmark suite, and authored the manuscript.\\
